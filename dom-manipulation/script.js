@@ -148,6 +148,54 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
       try {
         const importedQuotes = JSON.parse(event.target.result);
         quotes.push(...import
+            // Load quotes from local storage (if any)
+let quotes = JSON.parse(localStorage.getItem("quotes")) || [
+    { text: "The best way to predict the future is to create it.", category: "Inspiration" },
+    { text: "Life is 10% what happens to us and 90% how we react to it.", category: "Motivation" },
+    { text: "Success is not the key to happiness. Happiness is the key to success.", category: "Happiness" }
+  ];
+  
+  // Load the last selected category from local storage
+  let lastSelectedCategory = localStorage.getItem("selectedCategory") || "all";
+  
+  // Function to display quotes
+  function displayQuotes(filteredQuotes) {
+    const quoteDisplay = document.getElementById("quoteDisplay");
+    quoteDisplay.innerHTML = '';
+  
+    if (filteredQuotes.length > 0) {
+      filteredQuotes.forEach(quote => {
+        quoteDisplay.innerHTML += `<p><strong>${quote.category}</strong>: "${quote.text}"</p>`;
+      });
+    } else {
+      quoteDisplay.innerHTML = `<p>No quotes found for this category.</p>`;
+    }
+  }
+  
+  // Function to display a random quote from the filtered list
+  function showRandomQuote() {
+    const filteredQuotes = getFilteredQuotes();
+  
+    // Generate a random index
+    const randomIndex = Math.floor(Math.random() * filteredQuotes.length);
+  
+    // Get the random quote
+    const randomQuote = filteredQuotes[randomIndex];
+  
+    // Display the random quote
+    const quoteDisplay = document.getElementById("quoteDisplay");
+    quoteDisplay.innerHTML = `<p><strong>${randomQuote.category}</strong>: "${randomQuote.text}"</p>`;
+  }
+  
+  // Function to get filtered quotes based on selected category
+  function getFilteredQuotes() {
+    const selectedCategory = document.getElementById("categoryFilter").value;
+  
+    // Save the selected category in local storage
+    localStorage.setItem("selectedCategory", selectedCategory);
+  
+   
+  
   
   
   
