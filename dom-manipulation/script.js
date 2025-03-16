@@ -508,6 +508,30 @@ function importFromJsonFile(event) {
 
 // Add event listener for the file input
 document.getElementById("importFile").addEventListener("change", importFromJsonFile);
+// Mock server URL (you can replace this with your own API endpoint in a real application)
+const serverUrl = "https://jsonplaceholder.typicode.com/posts"; // Using posts to simulate quotes
+
+// Load quotes from local storage (if any)
+let quotes = JSON.parse(localStorage.getItem("quotes")) || [
+  { text: "The best way to predict the future is to create it.", category: "Inspiration" },
+  { text: "Life is 10% what happens to us and 90% how we react to it.", category: "Motivation" },
+  { text: "Success is not the key to happiness. Happiness is the key to success.", category: "Happiness" }
+];
+
+// Function to fetch quotes from the simulated server
+async function fetchQuotesFromServer() {
+  try {
+    const response = await fetch(serverUrl);
+    const serverData = await response.json();
+    // Simulate server data structure similar to quote objects
+    const serverQuotes = serverData.map(post => ({
+      text: post.title, 
+      category: post.body.substring(0, 20) // For demonstration, we'll take a small snippet from the body as the category
+    }));
+    return serverQuotes;
+  } catch (error) {
+    console.
+
 
 
 
