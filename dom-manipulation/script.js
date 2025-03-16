@@ -193,7 +193,114 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
   
     // Save the selected category in local storage
     localStorage.setItem("selectedCategory", selectedCategory);
+  // Mock server URL (JSONPlaceholder simulates a real server for testing purposes)
+const serverUrl = "https://jsonplaceholder.typicode.com/posts"; // Using posts to simulate quotes
+
+// Load quotes from local storage (if any)
+let quotes = JSON.parse(localStorage.getItem("quotes")) || [
+  { text: "The best way to predict the future is to create it.", category: "Inspiration" },
+  { text: "Life is 10% what happens to us and 90% how we react to it.", category: "Motivation" },
+  { text: "Success is not the key to happiness. Happiness is the key to success.", category: "Happiness" }
+];
+
+// Function to fetch data from the server (simulated by JSONPlaceholder)
+async function fetchFromServer() {
+  try {
+    const response = await fetch(serverUrl);
+    const serverData = await response.json();
+    // Simulate server data structure similar to quote objects
+    const serverQuotes = serverData.map(post => ({
+      text: post.title, 
+      category: post.body.substring(0, 20) // For demonstration, we'll take a small snippet from the body as the category
+    }));
+    return serverQuotes;
+  } catch (error) {
+    console.error("Error fetching server data:", error);
+    return [];
+  }
+}
+
+// Function to sync data with the server
+async function syncData() {
+  const serverQuotes = await fetchFromServer();
   
+  // Simulate conflict resolution (server data takes precedence)
+  for (let serverQuote of serverQuotes) {
+    const localQuoteIndex = quotes.findIndex(quote => quote.text === serverQuote.text);
+
+    if (localQuoteIndex === -1) {
+      // Add the server quote to the local array if it's not already there
+      quotes.push(serverQuote);
+    } else {
+      // If the quote exists locally, we'll overwrite it with the server data
+      quotes[localQuoteIndex] = serverQuote;
+    }
+  }
+
+  // Save the updated quotes to local storage
+  saveQuotes();
+
+  // Notify the user that data has been synced
+  alert("Data has been synced with the server. Any conflicts were resolved.");
+}
+
+// Function to save quotes to local storage
+function saveQuotes() {
+  localStorage.setItem("quotes", JSON.stringify(quotes));
+}
+
+// Function to display quotes
+function displayQuotes(filteredQuotes) {
+  const quoteDisplay = document.getElementById("quoteDisplay");
+  quoteDisplay.innerHTML = '';
+
+  if (filteredQuotes.length > 0) {
+    filteredQuotes.forEach(quote => {
+      quoteDisplay.innerHTML += `<p><strong>${quote.category}</strong>: "${quote.text}"</p>`;
+    });
+  } else {
+    quoteDisplay.innerHTML = `<p>No quotes found for this category.</p>`;
+  }
+}
+
+// Function to display a random quote from the filtered list
+function showRandomQuote() {
+  const filteredQuotes = getFilteredQuotes();
+
+  // Generate a random index
+  const randomIndex = Math.floor(Math.random() * filteredQuotes.length);
+
+  // Get the random quote
+  const randomQuote = filteredQuotes[randomIndex];
+
+  // Display the random quote
+  const quoteDisplay = document.getElementById("quoteDisplay");
+  quoteDisplay.innerHTML = `<p><strong>${randomQuote.category}</strong>: "${randomQuote.text}"</p>`;
+}
+
+// Function to get filtered quotes based on selected category
+function getFilteredQuotes() {
+  const selectedCategory = document.getElementById("categoryFilter").value;
+
+  if (selectedCategory === "all") {
+    return quotes; // Return all quotes
+  } else {
+    return quotes.filter(quote => quote.category === selectedCategory); // Filter by category
+  }
+}
+
+// Function to create the Add Quote form dynamically
+function createAddQuoteForm() {
+  const formContainer = document.getElementById("formContainer");
+
+  const newQuoteText = document.createElement("input");
+  newQuoteText.id = "newQuoteText";
+  newQuoteText.type = "text";
+  newQuoteText.placeholder = "Enter a new quote";
+
+  const newQuoteCategory = document.createElement("input");
+  newQuoteCategory.id =
+
    
   
   
