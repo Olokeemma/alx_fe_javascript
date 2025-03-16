@@ -300,6 +300,18 @@ function createAddQuoteForm() {
 
   const newQuoteCategory = document.createElement("input");
   newQuoteCategory.id =
+// Mock server URL (JSONPlaceholder simulates a real server for testing purposes)
+const serverUrl = "https://jsonplaceholder.typicode.com/posts"; // Using posts to simulate quotes
+
+// Load quotes from local storage (if any)
+let quotes = JSON.parse(localStorage.getItem("quotes")) || [
+  { text: "The best way to predict the future is to create it.", category: "Inspiration" },
+  { text: "Life is 10% what happens to us and 90% how we react to it.", category: "Motivation" },
+  { text: "Success is not the key to happiness. Happiness is the key to success.", category: "Happiness" }
+];
+
+// Function to fetch quotes from the simulated server
+async function fetchQuot
 
    
   
