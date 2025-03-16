@@ -10,13 +10,14 @@
   <div id="quoteDisplay"></div>
   <button id="newQuote">Show New Quote</button>
 
-  <!-- Form for adding a new quote -->
-  <div>
-    <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
-    <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-    <button id="addQuote">Add Quote</button>
-  </div>
+  <!-- Form container for adding a new quote -->
+  <div id="formContainer"></div>
+
+  <!-- Export and Import buttons -->
+  <button id="exportJson">Export Quotes to JSON</button>
+  <input type="file" id="importFile" accept=".json" />
 
   <script src="script.js"></script>
 </body>
 </html>
+
